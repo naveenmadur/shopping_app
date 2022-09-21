@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:shoping_app/screens/cart_screen.dart';
 import 'package:shoping_app/screens/edit_product_screen.dart';
 import 'package:shoping_app/screens/products_overview_screen.dart';
-import 'package:shoping_app/models/product_data.dart';
+import 'package:shoping_app/providers/product_data.dart';
 import 'package:shoping_app/screens/product_detail_screen.dart';
-import 'package:shoping_app/models/cart.dart';
-import 'models/orders.dart';
+import 'package:shoping_app/providers/cart.dart';
+import 'providers/orders.dart';
 import 'screens/orders_screen.dart';
 import 'screens/user_products_screen.dart';
 void main() {

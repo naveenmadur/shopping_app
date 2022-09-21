@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shoping_app/models/cart.dart';
-import 'package:shoping_app/models/product_data.dart';
+import 'package:shoping_app/providers/cart.dart';
+import 'package:shoping_app/providers/product_data.dart';
 import 'package:shoping_app/screens/cart_screen.dart';
 import 'package:shoping_app/widgets/app_drawer.dart';
 import 'package:shoping_app/widgets/product_grid.dart';
 import 'package:provider/provider.dart';
 import 'package:shoping_app/widgets/badge.dart';
-import '../models/product_data.dart';
+import '../providers/product_data.dart';
 
 enum FilterOptions {
   favourites,
@@ -46,6 +46,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       }
     });
       _isInit = false;
+      super.didChangeDependencies();
   }
 
   @override

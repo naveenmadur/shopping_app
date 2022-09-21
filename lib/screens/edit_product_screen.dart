@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shoping_app/models/product.dart';
+import 'package:shoping_app/providers/product.dart';
 import 'package:provider/provider.dart';
-import 'package:shoping_app/models/product_data.dart';
+import 'package:shoping_app/providers/product_data.dart';
 
 class EditProducts extends StatefulWidget {
   const EditProducts({Key? key}) : super(key: key);

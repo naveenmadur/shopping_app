@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoping_app/models/orders.dart';
+import 'package:shoping_app/providers/orders.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 

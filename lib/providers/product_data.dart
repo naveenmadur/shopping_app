@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shoping_app/models/product.dart';
+import 'package:shoping_app/models/http_exception.dart';
+import 'package:shoping_app/providers/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ProductData extends ChangeNotifier {
-   List<Product> _products = [];
+  List<Product> _products = [];
 
   List<Product> get items {
     return [..._products];
@@ -18,7 +19,7 @@ class ProductData extends ChangeNotifier {
     return _products.firstWhere((element) => element.id == id);
   }
 
-//Fetching products from http GET request
+//Fetching products using http GET request
   Future<void> fetchProducts() async {
     final url = Uri.parse(
         'https://flutter-shop-app-48226-default-rtdb.firebaseio.com/products.json');
@@ -43,7 +44,7 @@ class ProductData extends ChangeNotifier {
     }
   }
 
-//Adding Products from http POST
+//Adding Products using http POST
   Future<void> addProducts(Product p) async {
     final url = Uri.parse(
         'https://flutter-shop-app-48226-default-rtdb.firebaseio.com/products.json');
@@ -71,11 +72,12 @@ class ProductData extends ChangeNotifier {
     }
   }
 
-//Updating products from http PATCH
+//Updating products using http PATCH
   Future<void> updateProduct(String? id, Product p) async {
     final url = Uri.parse(
         'https://flutter-shop-app-48226-default-rtdb.firebaseio.com/products/$id.json');
-        await http.patch(url, body: json.encode({
+    await http.patch(url,
+        body: json.encode({
           'title': p.title,
           'description': p.description,
           'imageUrl': p.imageUrl,
@@ -87,4 +89,22 @@ class ProductData extends ChangeNotifier {
     notifyListeners();
   }
 
+//Deleting products using http
+  Future<void> deleteProducts(String id) async {
+    final url = Uri.parse(
+        'https://flutter-shop-app-48226-default-rtdb.firebaseio.com/products/$id.json');
+    final existingProdIndex =
+        _products.indexWhere((element) => element.id == id);
+    Product? existingProduct = _products[existingProdIndex];
+    _products.removeAt(existingProdIndex);
+    notifyListeners();
+    final response = await http.delete(url);
+
+    if (response.statusCode >= 400) {
+      _products.insert(existingProdIndex, existingProduct);
+      notifyListeners();
+      throw HttpException(message: 'Couldn\'t delete item');
+    }
+    existingProduct = null;
+  }
 }
