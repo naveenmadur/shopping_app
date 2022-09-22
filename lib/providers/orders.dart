@@ -28,7 +28,10 @@ class Orders extends ChangeNotifier {
         'https://flutter-shop-app-48226-default-rtdb.firebaseio.com/orders.json');
     final response = await http.get(url);
     List<OrderItem> loadedOrders = [];
-    final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+    final extractedData = jsonDecode(response.body) as Map<String, dynamic>?;
+    if(extractedData == null){
+      return;
+    }
     extractedData.forEach((key, value) {
       loadedOrders.add(OrderItem(
         id: key,
@@ -41,7 +44,7 @@ class Orders extends ChangeNotifier {
       ),
       );
     });
-    _orderItems = loadedOrders;
+    _orderItems = loadedOrders.reversed.toList();
     notifyListeners();
     // print(jsonDecode(response.body));
   }
